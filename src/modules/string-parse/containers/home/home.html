@@ -1,4 +1,7 @@
 <div>
+  <!--Search  -->
   <textarea ng-model="$ctrl.textToParse" />
   <button ng-click="$ctrl.parse()">Parse</button>
+  <!--Result  -->
+  <div>{{$ctrl.parsedResponse | json}}</div>
 </div>

@@ -9,13 +9,16 @@ export class HomeContainer implements ng.IComponentController {
   public static template = require('./home.html');
 
   public textToParse: string;
+  public parsedResponse: object;
 
   constructor(protected stringParseService: StringParseService) {
 
   }
 
   public parse() {
-    this.stringParseService.parse(this.textToParse);
+    this.stringParseService.parse(this.textToParse).then((response) => {
+      this.parsedResponse = response;
+    });
   }
 
 }
