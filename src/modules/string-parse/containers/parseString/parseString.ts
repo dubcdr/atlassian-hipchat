@@ -21,6 +21,12 @@ export class ParseStringContainer implements ng.IComponentController {
     });
   }
 
+  public testParse() {
+    this.stringParseService.testParse(['http://www.google.com', 'https://twitter.com/jdorfman/status/430511497475670016']).then((response) => {
+      console.log(response);
+    });
+  }
+
 }
 
 // Define the route for this container

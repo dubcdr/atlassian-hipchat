@@ -7,11 +7,12 @@ import './styles/screen.scss';
 
 // load additional libraries
 import '@uirouter/angularjs';
-import 'angular-material';
-import 'angular-animate';
+// import 'angular-material';
+// import 'angular-animate';
 
 import './modules';
-angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial', 'stringParse']);
+angular.module('app', ['ui.router', 'stringParse']);
+// angular.module('app', ['ui.router', 'ngAnimate', 'ngMaterial', 'stringParse']);
 
 import './app.router';
 

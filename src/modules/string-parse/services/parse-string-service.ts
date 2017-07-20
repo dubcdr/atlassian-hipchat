@@ -25,84 +25,32 @@ export class StringParseService {
       let parsedResult = {} as IParseResponse;
       // Finding the links is the only criteria that requires any ajax call
       // therefore there are no nasty promise chaining issues.
-      this.findLinks(str).then((links) => {
-        // Find Mentions
-        let mentions = this.findMentions(str);
-        // Find Emoticons
-        let emoticons = this.findEmoticons(str);
+      let links = ParseStringHelpers.findLinks(str);
+      // Find Mentions
+      let mentions = ParseStringHelpers.findMentions(str);
+      // Find Emoticons
+      let emoticons = ParseStringHelpers.findEmoticons(str);
 
-        if (emoticons && emoticons.length > 0) {
-          parsedResult.emoticons = emoticons;
-        }
-        if (mentions && mentions.length > 0) {
-          parsedResult.mentions = mentions;
-        }
-        if (links && links.length > 0) {
-          parsedResult.links = links;
-        }
-        this.$log.info('parse result from service', parsedResult);
-        resolve(parsedResult);
-      }).catch((err) => {
-        reject(err);
-      });
+      if (emoticons && emoticons.length > 0) {
+        parsedResult.emoticons = emoticons;
+      }
+      if (mentions && mentions.length > 0) {
+        parsedResult.mentions = mentions;
+      }
+      if (links && links.length > 0) {
+        // parsedResult.links = links;
+      }
+      this.$log.info('parse result from service', parsedResult);
     });
 
   }
 
-  public testParse(str: string): Promise<any> {
-    return new this.$q((resolve, reject) => {
-      let mentions = this.findMentions(str);
-      resolve(mentions);
-    });
+  public testParse(strs: Array<string>): ng.IHttpPromise<any> {
+    return this.getHtmlHeaders(strs);
   }
 
-  /**
-   *
-   *
-   *
-   * @param {string} str
-   * @returns {Array<string>}
-   * @memberof StringParseService
-   */
-  public findMentions(str: string): Array<string> {
-    const regEx = /(?:[@])(\w{1,})/g;
-    return this.findAllRegEx(str, regEx);
-  }
-
-  /**
-   *
-   *
-   * @param {string} str
-   * @returns {Array<string>}
-   * @memberof StringParseService
-   */
-  public findEmoticons(str: string): Array<string> {
-    const regEx = /(?:[(])(\w{1,15})(?:[)])/g;
-    return this.findAllRegEx(str, regEx);
-  }
-
-  /**
-   *
-   *
-   * @param {string} str
-   * @returns {Promise<Array<IParsedLink>>}
-   * @memberof StringParseService
-   */
-  public findLinks(str: string): Promise<Array<IParsedLink>> {
-    return new this.$q((resolve, reject) => {
-      resolve(new Array<IParsedLink>());
-    });
-  }
-
-  /**
-   *
-   *
-   * @param {string} html
-   * @returns {string}
-   * @memberof StringParseService
-   */
-  public parseHeaderFromHtml(html: string): string {
-    return '';
+  public getHtmlHeaders(urls: Array<string>): ng.IHttpPromise<IParsedLink> {
+    return this.$http.post('/getUrlTitle', { urls });
   }
 
   /**
@@ -118,6 +66,51 @@ export class StringParseService {
 
   // Utility Methods
 
+
+}
+
+/**
+ * This class is used in the actual service so that the functions can be unit tested
+ *
+ * @class ParseStringHelpers
+ */
+class ParseStringHelpers {
+
+  /**
+   *
+   *
+   *
+   * @param {string} str
+   * @returns {Array<string>}
+   * @memberof StringParseService
+   */
+  public static findMentions(str: string): Array<string> {
+    const regEx = /(?:[@])(\w{1,})/g;
+    return ParseStringHelpers.findAllRegEx(str, regEx);
+  }
+
+  /**
+   *
+   *
+   * @param {string} str
+   * @returns {Array<string>}
+   * @memberof StringParseService
+   */
+  public static findEmoticons(str: string): Array<string> {
+    const regEx = /(?:[(])(\w{1,15})(?:[)])/g;
+    return ParseStringHelpers.findAllRegEx(str, regEx);
+  }
+
+  /**
+   *
+   *
+   * @param {string} str
+   * @returns {Promise<Array<IParsedLink>>}
+   * @memberof StringParseService
+   */
+  public static findLinks(str: string): Array<string> {
+    return new Array<string>();
+  }
   /**
    *  Method that takes in a string and regEx and outputs
    *  an array of strings. Non capturing
@@ -128,7 +121,7 @@ export class StringParseService {
    * @returns {Array<string>}
    * @memberof StringParseService
    */
-  private findAllRegEx(str: string, regEx: RegExp): Array<string> {
+  private static findAllRegEx(str: string, regEx: RegExp): Array<string> {
     let matches = new Array<string>();
     let match = regEx.exec(str);
     while (match != null) {
@@ -138,7 +131,6 @@ export class StringParseService {
     }
     return matches;
   }
-
 }
 
 angular.module('stringParse')

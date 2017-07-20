@@ -41,6 +41,7 @@
     "babel-istanbul": "~0.11.0",
     "compression-webpack-plugin": "~0.3.2",
     "css-loader": "~0.25.0",
+    "escape-html": "^1.0.3",
     "file-loader": "~0.9.0",
     "hapi": "^16.5.0",
     "html-webpack-plugin": "~2.24.1",
