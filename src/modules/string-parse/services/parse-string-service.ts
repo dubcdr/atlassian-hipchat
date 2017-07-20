@@ -12,16 +12,16 @@ export interface IParsedLink {
 }
 
 export class StringParseService {
-  public static $inject = ['$http', '$log'];
+  public static $inject = ['$http', '$log', '$q'];
 
   public baseUrl: string;
 
-  constructor(protected $http: ng.IHttpService, protected $log: ng.ILogService) {
+  constructor(protected $http: ng.IHttpService, protected $log: ng.ILogService, protected $q: ng.IQService) {
 
   }
 
-  public parse(str: string): Promise<IParseResponse> {
-    return new Promise((resolve, reject) => {
+  public parse(str: string): ng.IPromise<IParseResponse> {
+    return new this.$q((resolve, reject) => {
       let parsedResult = {} as IParseResponse;
       // Finding the links is the only criteria that requires any ajax call
       // therefore there are no nasty promise chaining issues.
@@ -50,7 +50,7 @@ export class StringParseService {
   }
 
   public testParse(str: string): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new this.$q((resolve, reject) => {
       let mentions = this.findMentions(str);
       resolve(mentions);
     });
@@ -89,7 +89,7 @@ export class StringParseService {
    * @memberof StringParseService
    */
   public findLinks(str: string): Promise<Array<IParsedLink>> {
-    return new Promise((resolve, reject) => {
+    return new this.$q((resolve, reject) => {
       resolve(new Array<IParsedLink>());
     });
   }

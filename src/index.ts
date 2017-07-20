@@ -1,4 +1,5 @@
 import * as angular from 'angular';
+import 'jquery';
 
 // load our default (non specific) css
 // import 'bootstrap/dist/css/bootstrap.css';

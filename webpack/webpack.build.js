@@ -7,11 +7,10 @@ module.exports = {
     entry: ['./src/index.ts'],
     output: {
         filename: 'build.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, './../back/public')
     },
     devtool: 'source-map',
     resolve: {
-        root: path.resolve(__dirname),
         extensions: ['.ts', '.js', '.json']
     },
     plugins: [
@@ -36,9 +35,5 @@ module.exports = {
     ],
     module:{
         loaders: loaders
-    },
-    tslint: {
-        emitErrors: true,
-        failOnHint: true
-  }
+    }
 };

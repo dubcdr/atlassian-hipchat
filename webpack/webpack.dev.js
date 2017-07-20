@@ -6,7 +6,7 @@ module.exports = {
   entry: ['./src/index.ts'],
   output: {
     filename: 'build.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, './../dist')
   },
   resolve: {
     extensions: ['.ts', '.js', '.json']
