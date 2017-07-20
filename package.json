@@ -4,8 +4,7 @@
   "description": "A seed project for a largescale angular architecture in webpack and typescript",
   "main": "/",
   "scripts": {
-    "start": "export NODE_ENV=dev && node_modules/.bin/webpack-dev-server --port 8181",
-    "start-old": "webpack --config webpack/webpack.dev.js --watch --NODE_ENV=dev",
+    "start": "export NODE_ENV=dev && node_modules/.bin/webpack-dev-server --config webpack/webpack.dev.js --watch --port 8081",
     "test": "karma start --NODE_ENV=test",
     "build": "webpack --config webpack/webpack.build.js --NODE_ENV=production"
   },
@@ -13,7 +12,6 @@
   "license": "MIT",
   "dependencies": {
     "@types/angular-mocks": "~1.5.5",
-    "@types/bootstrap": "~3.3.32",
     "@types/jasmine": "~2.5.37",
     "@types/jquery": "~3.2.6",
     "@types/jwt-decode": "~1.4.28",
@@ -21,7 +19,7 @@
     "@types/source-map": "~0.1.29",
     "@types/uglify-js": "~2.6.28",
     "angular": "~1.5.8",
-    "bootstrap": "~3.3.7",
+    "jquery": "^3.2.1",
     "lodash": "~4.16.6"
   },
   "devDependencies": {
@@ -30,8 +28,6 @@
     "angular-mocks": "~1.5.8",
     "babel-core": "~6.18.2",
     "babel-istanbul": "~0.11.0",
-    "browser-sync": "~2.17.5",
-    "browser-sync-webpack-plugin": "~1.1.3",
     "compression-webpack-plugin": "~0.3.2",
     "css-loader": "~0.25.0",
     "file-loader": "~0.9.0",

@@ -4,10 +4,14 @@ import * as angular from 'angular';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles/screen.scss';
 
-angular.module('app', []);
+// load additional libraries
+import '@uirouter/angularjs';
+
+import './modules';
+angular.module('app', ['ui.router', 'stringParse']);
+
+import './app.router';
+
 angular.bootstrap(document, ['app'], {
   strictDi: true
 });
-
-import './app.router';
-import './modules';
