@@ -31,6 +31,8 @@
   },
   "devDependencies": {
     "@types/angular": "~1.6.25",
+    "@types/angular-material": "^1.1.52",
+    "@types/hapi": "^16.1.6",
     "@types/jasmine": "^2.5.53",
     "@types/jasminewd2": "^2.0.2",
     "@uirouter/angularjs": "^1.0.5",
@@ -55,6 +57,7 @@
     "karma-verbose-reporter": "0.0.6",
     "karma-webpack": "^1.8.1",
     "node-sass": "~3.11.1",
+    "osmosis": "^1.1.4",
     "phantomjs-polyfill": "0.0.2",
     "phantomjs-prebuilt": "~2.1.13",
     "raw-loader": "0.5.1",
