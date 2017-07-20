@@ -9,12 +9,13 @@
     "outDir": "out",
     "types": [
       "angular",
-      "karma"
+      "jasmine"
     ],
     "moduleResolution": "node",
     "typeRoots": [
       "./node_modules/@types"
-    ]
+    ],
+    "skipLibCheck": true
   },
   "exclude": [
     "out",

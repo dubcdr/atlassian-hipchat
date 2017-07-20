@@ -1,6 +1,6 @@
 const Hapi = require('hapi');
 const Path = require('path');
-
+const Osmosis = require('osmosis');
 
 const server = new Hapi.Server({
   connections: {
@@ -31,13 +31,13 @@ server.register(require('inert'), (err) => {
   });
 })
 
-// server.route({
-//     method: 'GET',
-//     path: '/',
-//     handler: function (request, reply) {
-//         reply('Hello, world!');
-//     }
-// });
+server.route({
+    method: 'GET',
+    path: '/getUrlTitle',
+    handler: function (request, reply) {
+        reply('Hello, world!');
+    }
+});
 
 
 server.start((err) => {
