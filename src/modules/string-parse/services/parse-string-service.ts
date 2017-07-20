@@ -89,7 +89,6 @@ export class StringParseService {
    * @memberof StringParseService
    */
   public findLinks(str: string): Promise<Array<IParsedLink>> {
-    this.$log.info('')
     return new Promise((resolve, reject) => {
       resolve(new Array<IParsedLink>());
     });
@@ -118,11 +117,22 @@ export class StringParseService {
   }
 
   // Utility Methods
+
+  /**
+   *  Method that takes in a string and regEx and outputs
+   *  an array of strings. Non capturing
+   *
+   * @private
+   * @param {string} str
+   * @param {RegExp} regEx
+   * @returns {Array<string>}
+   * @memberof StringParseService
+   */
   private findAllRegEx(str: string, regEx: RegExp): Array<string> {
     let matches = new Array<string>();
     let match = regEx.exec(str);
     while (match != null) {
-      // match index 1 does not include the non grouping characters
+      // match index 1 does not include the non capturing characters
       matches.push(match[1]);
       match = regEx.exec(str);
     }
