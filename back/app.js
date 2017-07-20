@@ -32,10 +32,14 @@ server.register(require('inert'), (err) => {
 })
 
 server.route({
-    method: 'GET',
+    method: 'POST',
     path: '/getUrlTitle',
-    handler: function (request, reply) {
-        reply('Hello, world!');
+    handler: (request, reply) => {
+        if (request.payload.url) {
+          reply('url given');
+        } else {
+          reply('no url');
+        }
     }
 });
 
