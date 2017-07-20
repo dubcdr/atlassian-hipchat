@@ -9,6 +9,10 @@
     "outDir": "out",
     "types": [
       "angular"
+    ],
+    "moduleResolution": "node",
+    "typeRoots": [
+      "./node_modules/@types"
     ]
   },
   "exclude": [
@@ -17,6 +21,5 @@
     "dist",
     "dev",
     "reports"
-  ],
-  "version": "2.0.6"
+  ]
 }

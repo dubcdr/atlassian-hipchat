@@ -1,21 +1,18 @@
 var loaders = require("./loaders");
-var preloaders = require("./preloaders");
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
     entry: ['./src/index.ts'],
     output: {
         filename: 'build.js',
-        path: 'dist'
+        path: path.resolve(__dirname, 'dist')
     },
     devtool: 'source-map',
     resolve: {
-        root: __dirname,
-        extensions: ['', '.ts', '.js', '.json']
-    },
-    resolveLoader: {
-        modulesDirectories: ["node_modules"]
+        root: path.resolve(__dirname),
+        extensions: ['.ts', '.js', '.json']
     },
     plugins: [
         new webpack.optimize.UglifyJsPlugin(
@@ -38,7 +35,6 @@ module.exports = {
         })
     ],
     module:{
-        preLoaders:preloaders,
         loaders: loaders
     },
     tslint: {

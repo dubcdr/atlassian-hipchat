@@ -2,7 +2,6 @@
 
 var webpackConfig = require('./webpack/webpack.test.js');
 require('phantomjs-polyfill')
-webpackConfig.entry = {};
 
 module.exports = function (config) {
     config.set({
@@ -14,10 +13,10 @@ module.exports = function (config) {
         autoWatch: false,
         browsers: ['PhantomJS'],
         singleRun: true,
+        webpack: webpackConfig,
         autoWatchBatchDelay: 300,
         files: [
-            './node_modules/phantomjs-polyfill/bind-polyfill.js',
-            './src/test.ts'
+            './src/**/*.spec.ts'
         ],
         babelPreprocessor: {
             options: {
@@ -25,8 +24,7 @@ module.exports = function (config) {
             }
         },
         preprocessors: {
-            'src/test.ts': ['webpack'],
-            'src/**/!(*.spec)+(.js)': ['coverage']
+            './src/**/*.spec.ts': ['webpack']
         },
         webpackMiddleware: {
             stats: {
@@ -34,28 +32,14 @@ module.exports = function (config) {
                 colors: true
             }
         },
-        webpack: webpackConfig,
         reporters: [
-            'dots',
-            'spec',
-            'coverage'
+            'verbose'
         ],
-        coverageReporter: {
-            reporters: [
-                {
-                    dir: 'reports/coverage/',
-                    subdir: '.',
-                    type: 'html'
-                },{
-                    dir: 'reports/coverage/',
-                    subdir: '.',
-                    type: 'cobertura'
-                }, {
-                    dir: 'reports/coverage/',
-                    subdir: '.',
-                    type: 'json'
-                }
-            ]
-        }
+        plugins: [
+            require('karma-webpack'),
+            ('karma-jasmine'),
+            ('karma-phantomjs-launcher'),
+            ('karma-verbose-reporter')
+        ]
     });
 };
