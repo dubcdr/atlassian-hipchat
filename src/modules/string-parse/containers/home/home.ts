@@ -15,7 +15,7 @@ export class HomeContainer implements ng.IComponentController {
   }
 
   public parse() {
-
+    this.stringParseService.parse(this.textToParse);
   }
 
 }
