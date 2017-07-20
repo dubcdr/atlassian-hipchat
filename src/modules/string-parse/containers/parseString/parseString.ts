@@ -2,7 +2,7 @@ import * as angular from 'angular';
 import { StateProvider } from '@uirouter/angularjs';
 import { StringParseService } from './../../services/parse-string-service';
 
-export class ParseStringContainer implements ng.IComponentController {
+export class ParseStringContainer {
   public static $inject = ['StringParseService'];
   public static bindings = {};
   public static tagName = 'parseStringContainer';
@@ -18,12 +18,6 @@ export class ParseStringContainer implements ng.IComponentController {
   public parse() {
     this.stringParseService.parse(this.textToParse).then((response) => {
       this.parsedResponse = response;
-    });
-  }
-
-  public testParse() {
-    this.stringParseService.testParse(['http://www.google.com', 'https://twitter.com/jdorfman/status/430511497475670016']).then((response) => {
-      console.log(response);
     });
   }
 

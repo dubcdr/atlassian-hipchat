@@ -37,7 +37,7 @@ server.register(require('inert'), (err) => {
 })
 
 function getUrl(url) {
-  console.log(`start of getUrl for ${url}`)
+  // console.log(`start of getUrl for ${url}`)
   return new Promise((resolve, reject) => {
     Osmosis.get(url)
       .set({

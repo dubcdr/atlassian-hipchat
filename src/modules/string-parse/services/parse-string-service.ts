@@ -38,18 +38,16 @@ export class StringParseService {
         parsedResult.mentions = mentions;
       }
       if (links && links.length > 0) {
-        // parsedResult.links = links;
+        this.getHtmlHeaders(links).then((resp: ng.IHttpPromiseCallbackArg<Array<IParsedLink>>) => {
+          parsedResult.links = resp.data;
+        });
       }
-      this.$log.info('parse result from service', parsedResult);
+      console.log(parsedResult);
+      resolve(parsedResult);
     });
-
   }
 
-  public testParse(strs: Array<string>): ng.IHttpPromise<any> {
-    return this.getHtmlHeaders(strs);
-  }
-
-  public getHtmlHeaders(urls: Array<string>): ng.IHttpPromise<IParsedLink> {
+  public getHtmlHeaders(urls: Array<string>): ng.IHttpPromise<Array<IParsedLink>> {
     return this.$http.post('/getUrlTitle', { urls });
   }
 
@@ -74,8 +72,12 @@ export class StringParseService {
  *
  * @class ParseStringHelpers
  */
-class ParseStringHelpers {
-
+export class ParseStringHelpers {
+  public static mentionRegEx = /(?:[@])(\w{1,})/g;
+  public static emoticonRegEx = /(?:[(])(\w{1,15})(?:[)])/g;
+  // source: https://stackoverflow.com/questions/8188645/javascript-regex-to-match-a-url-in-a-field-of-text
+  // note: removed ftp - didnt think it was neccessary
+  public static linkRegEx = new RegExp('(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?');
   /**
    *
    *
@@ -85,8 +87,7 @@ class ParseStringHelpers {
    * @memberof StringParseService
    */
   public static findMentions(str: string): Array<string> {
-    const regEx = /(?:[@])(\w{1,})/g;
-    return ParseStringHelpers.findAllRegEx(str, regEx);
+    return ParseStringHelpers.findAllRegEx(str, ParseStringHelpers.mentionRegEx);
   }
 
   /**
@@ -97,8 +98,7 @@ class ParseStringHelpers {
    * @memberof StringParseService
    */
   public static findEmoticons(str: string): Array<string> {
-    const regEx = /(?:[(])(\w{1,15})(?:[)])/g;
-    return ParseStringHelpers.findAllRegEx(str, regEx);
+    return ParseStringHelpers.findAllRegEx(str, ParseStringHelpers.emoticonRegEx);
   }
 
   /**
@@ -109,7 +109,7 @@ class ParseStringHelpers {
    * @memberof StringParseService
    */
   public static findLinks(str: string): Array<string> {
-    return new Array<string>();
+    return ParseStringHelpers.findAllRegEx(str, ParseStringHelpers.linkRegEx);
   }
   /**
    *  Method that takes in a string and regEx and outputs
@@ -121,7 +121,7 @@ class ParseStringHelpers {
    * @returns {Array<string>}
    * @memberof StringParseService
    */
-  private static findAllRegEx(str: string, regEx: RegExp): Array<string> {
+  public static findAllRegEx(str: string, regEx: RegExp): Array<string> {
     let matches = new Array<string>();
     let match = regEx.exec(str);
     while (match != null) {
