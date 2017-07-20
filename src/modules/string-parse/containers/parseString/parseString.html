@@ -1,0 +1,12 @@
+<!--All of these are so simple, no need to convert them into components  -->
+<div layout-padding layout="column">
+  <!--Search  -->
+  <div class="" layout="row">
+    <md-input-container md-no-float>
+      <textarea class="md-input" ng-model="$ctrl.textToParse" />
+    </md-input-container>
+    <md-button ng-click="$ctrl.parse()" class="md-raised" aria-label="parse"> Parse </md-button>
+  </div>
+  <!--Result  -->
+  <div>{{$ctrl.parsedResponse | json}}</div>
+</div>
