@@ -1,5 +1,5 @@
 import { } from 'jasmine';
-import { StringParseService, ParseStringHelpers, IParsedLink, IParseResponse } from './parse-string-service';
+import { StringParseService, ParseStringHelpers } from './parse-string-service';
 import * as angular from 'angular';
 import 'angular-mocks';
 // import 'angular-material';
@@ -8,9 +8,9 @@ describe('service::Parse-String-Service', () => {
   beforeEach(angular.mock.module('stringParse'));
   beforeEach(angular.mock.module('app'));
   // tslint:disable-next-line
-  beforeEach(angular.mock.inject((__stringParseService__) => {
-    stringParseService = __stringParseService__;
-  }));
+  // beforeEach(angular.mock.inject((__stringParseService__) => {
+  //   stringParseService = __stringParseService__;
+  // }));
 
   // check that tests are running
   it('should add 1+1', () => {

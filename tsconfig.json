@@ -9,5 +9,8 @@
     "outDir": "out",
     "moduleResolution": "node",
     "skipLibCheck": true
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -12,6 +12,9 @@ typings/
 # Optional npm cache directory
 .npm
 
+#vscode
+.vscode
+
 #build directory
 back/public/*
 dist

@@ -1,4 +1,5 @@
 import * as angular from 'angular';
+import 'angular-material';
 import { StateProvider } from '@uirouter/angularjs';
 import { StringParseService } from './../../services/parse-string-service';
 
@@ -19,6 +20,8 @@ export class ParseStringContainer {
     this.stringParseService.parse(this.textToParse).then((response) => {
       this.parsedResponses = [response].concat(this.parsedResponses);
       this.textToParse = null;
+    }, (err) => {
+      console.log('error with parse service');
     });
   }
 

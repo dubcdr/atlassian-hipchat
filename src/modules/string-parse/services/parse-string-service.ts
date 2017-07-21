@@ -12,16 +12,16 @@ export interface IParsedLink {
 }
 
 export class StringParseService {
-  public static $inject = ['$http', '$q'];
+  public static $inject = ['$http', '$q', '$log'];
 
   public baseUrl: string;
 
-  constructor(protected $http: ng.IHttpService, protected $q: ng.IQService) {
+  constructor(protected $http: ng.IHttpService, protected $q: ng.IQService, protected $log: ng.ILogService) {
   }
 
   /**
-   *
-   *
+   *  This is the main service method. It takes in a string and looks for
+   *  emoticons, urls and mentions and returns an object with only those found
    *
    * @param {string} str
    * @returns {ng.IPromise<IParseResponse>}
@@ -29,9 +29,8 @@ export class StringParseService {
    */
   public parse(str: string): ng.IPromise<IParseResponse> {
     return new this.$q((resolve, reject) => {
+      this.$log.info('starting parse service');
       let parsedResult = {} as IParseResponse;
-      // Finding the links is the only criteria that requires any ajax call
-      // therefore there are no nasty promise chaining issues.
       let links = ParseStringHelpers.findLinks(str);
       // Find Mentions
       let mentions = ParseStringHelpers.findMentions(str);
@@ -39,21 +38,28 @@ export class StringParseService {
       let emoticons = ParseStringHelpers.findEmoticons(str);
 
       if (emoticons && emoticons.length > 0) {
+        this.$log.info('found emoticons', emoticons);
         parsedResult.emoticons = emoticons;
       }
       if (mentions && mentions.length > 0) {
+        this.$log.info('found mentions', mentions);
         parsedResult.mentions = mentions;
       }
+      // Finding the links is the only criteria that requires any http call
+      // therefore there are no nasty promise chaining issues.
       if (links && links.length > 0) {
+        this.$log.info('found links', links);
         this.getHtmlHeaders(links).then((resp: ng.IHttpPromiseCallbackArg<Array<IParsedLink>>) => {
           parsedResult.links = resp.data;
+          this.$log.info('parsed result: ', parsedResult);
           resolve(parsedResult);
         }, (err) => {
           // Error Handling
           // Would navigate to error page
-          reject('error');
+          reject('error trying to get html links');
         });
       } else {
+        this.$log.info('parsed result: ', parsedResult);
         resolve(parsedResult);
       }
     });
@@ -64,7 +70,7 @@ export class StringParseService {
   }
 
   /**
-   *
+   *  Originally used this service for testing. Allows me to bypass cors issues
    *
    * @param {string} url
    * @returns {ng.IHttpPromise<string>}
@@ -74,13 +80,11 @@ export class StringParseService {
     return this.$http.get(`https://cors-anywhere.herokuapp.com/${url}`);
   }
 
-  // Utility Methods
-
-
 }
 
 /**
- * This class is used in the actual service so that the functions can be unit tested
+ *  This class is used in the actual service so that the functions can be unit tested
+ *  without a dependency on angularjs
  *
  * @class ParseStringHelpers
  */
@@ -90,9 +94,10 @@ export class ParseStringHelpers {
   // source: https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
   // tslint:disable-next-line
   public static linkRegEx = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+
   /**
-   *
-   *
+   *  Finds mentions in string
+   *  @{word characters}
    *
    * @param {string} str
    * @returns {Array<string>}
@@ -103,7 +108,8 @@ export class ParseStringHelpers {
   }
 
   /**
-   *
+   *  Finds emoticons in a string
+   *  ({word characters})
    *
    * @param {string} str
    * @returns {Array<string>}
@@ -114,7 +120,7 @@ export class ParseStringHelpers {
   }
 
   /**
-   *
+   *  Finds links in a string
    *
    * @param {string} str
    * @returns {Promise<Array<IParsedLink>>}
@@ -123,6 +129,7 @@ export class ParseStringHelpers {
   public static findLinks(str: string): Array<string> {
     return ParseStringHelpers.findAllRegEx(str, ParseStringHelpers.linkRegEx, 0);
   }
+
   /**
    *  Method that takes in a string and regEx and outputs
    *  an array of strings. Non capturing
@@ -130,6 +137,7 @@ export class ParseStringHelpers {
    * @private
    * @param {string} str
    * @param {RegExp} regEx
+   * @param {number} matchingGroup defaults to 1 for first matching group, else specify
    * @returns {Array<string>}
    * @memberof StringParseService
    */
@@ -146,7 +154,6 @@ export class ParseStringHelpers {
       matches.push(match[groupIndex]);
       match = regEx.exec(str);
     }
-    console.log(matches);
     return matches;
   }
 }
