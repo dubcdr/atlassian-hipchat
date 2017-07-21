@@ -50,5 +50,5 @@ describe('service::Parse-String-Service', () => {
 
     expect(urls).toContain('https://twitter.com/jdorfman/status/430511497475670016');
     expect(urls.length).toBe(1);
-  })
+  });
 });
