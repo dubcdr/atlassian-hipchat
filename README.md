@@ -41,12 +41,12 @@ npm run build
 npm start
 ```
 
-Now navigate to [localhost:2500]http://localhost:2500
+Now navigate to [localhost:2500](http://localhost:2500)
 
 ### Development
 FrontEnd Development is best with Webpack Dev Server for automatic reloading.
 Note: Setting up a CORS policy seemed like overkill for this project, therefore you wont be able to hit the api for finding 'title' tags from urls
-Note: the dev-server runs on [localhost:8081]http://localhost:8081
+Note: the dev-server runs on [localhost:8081](http://localhost:8081)
 ```
 npm run dev
 ```
@@ -61,10 +61,10 @@ npm test
 
 Some features seemed like overkill for such a small application.
 
-[ ] Babel - Make sure even IE8 is supported
-[ ] Protractor E2E Tests
-[ ] Linting
-[ ] PrePush - Linting, Test
+- [ ] Babel - Make sure even IE8 is supported
+- [ ] Protractor E2E Tests
+- [ ] Linting
+- [ ] PrePush - Linting, Test
 
 ### e2e test cases
 - make sure text area is enabled and visible
