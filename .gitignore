@@ -17,5 +17,7 @@ typings/
 
 #build directory
 back/public/*
+!back/public/.gitkeep
+
 dist
 
