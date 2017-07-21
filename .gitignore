@@ -13,6 +13,6 @@ typings/
 .npm
 
 #build directory
-back/public
+back/public/*
 dist
 
