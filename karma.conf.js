@@ -16,6 +16,7 @@ module.exports = function (config) {
     webpack: webpackConfig,
     autoWatchBatchDelay: 300,
     files: [
+      './src/index.ts',
       './src/**/*.spec.ts'
     ],
     babelPreprocessor: {
@@ -24,7 +25,8 @@ module.exports = function (config) {
       }
     },
     preprocessors: {
-      './src/**/*.spec.ts': ['webpack']
+      './src/index.ts': ['webpack'],
+      './src/**/*.ts': ['webpack']
     },
     webpackMiddleware: {
       stats: {
