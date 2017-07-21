@@ -49,22 +49,19 @@ server.register(require('inert'), (err) => {
  * @returns
  */
 function getUrl(url) {
-  const urlRegEx = new RegExp('(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?');
   return new Promise((resolve, reject) => {
-    if (urlRegEx.exec(url)[0] != null) {
-      Osmosis.get(url)
-        .set({
-          'title': 'title'
-        })
-        .data((resp) => {
-          resp.url = url;
-          resp.title = escapeHtml(resp.title);
-          resolve(resp)
-        })
-        .log(console.log)
-        .error(reject)
-        .debug(console.log);
-    }
+    Osmosis.get(url)
+      .set({
+        'title': 'title'
+      })
+      .data((resp) => {
+        resp.url = url;
+        resp.title = escapeHtml(resp.title);
+        resolve(resp)
+      })
+      .log(console.log)
+      .error(reject)
+      .debug(console.log);
   }, (err) => {
     console.log(err);
     reject();
@@ -81,7 +78,7 @@ function isUrlsValid(urls) {
 }
 
 function isUrlValid(url) {
-  const regEx = new RegExp('(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?', 'g');
+  const regEx = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
   let match = regEx.exec(str);
   return (match[0] != null);
 }
@@ -101,10 +98,10 @@ server.route({
         if (isUrlsValid(urls)) {
           // define all the promises
           let actions = urls.map(getUrl);
+          console.log('got to actions');
           let results = Promise.all(actions).then((results) => {
             reply(results);
           }, (err) => {
-            console.log('error');
             reply().code(500);
           });
         } else {

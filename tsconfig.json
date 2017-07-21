@@ -7,21 +7,7 @@
     "module": "commonjs",
     "experimentalDecorators": true,
     "outDir": "out",
-    "types": [
-      "angular",
-      "jasmine"
-    ],
     "moduleResolution": "node",
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
     "skipLibCheck": true
-  },
-  "exclude": [
-    "out",
-    "node_modules",
-    "dist",
-    "dev",
-    "reports"
-  ]
+  }
 }

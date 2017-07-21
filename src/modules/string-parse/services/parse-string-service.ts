@@ -12,14 +12,21 @@ export interface IParsedLink {
 }
 
 export class StringParseService {
-  public static $inject = ['$http', '$log', '$q'];
+  public static $inject = ['$http', '$q'];
 
   public baseUrl: string;
 
-  constructor(protected $http: ng.IHttpService, protected $log: ng.ILogService, protected $q: ng.IQService) {
-
+  constructor(protected $http: ng.IHttpService, protected $q: ng.IQService) {
   }
 
+  /**
+   *
+   *
+   *
+   * @param {string} str
+   * @returns {ng.IPromise<IParseResponse>}
+   * @memberof StringParseService
+   */
   public parse(str: string): ng.IPromise<IParseResponse> {
     return new this.$q((resolve, reject) => {
       let parsedResult = {} as IParseResponse;
@@ -40,12 +47,15 @@ export class StringParseService {
       if (links && links.length > 0) {
         this.getHtmlHeaders(links).then((resp: ng.IHttpPromiseCallbackArg<Array<IParsedLink>>) => {
           parsedResult.links = resp.data;
+          resolve(parsedResult);
         }, (err) => {
           // Error Handling
           // Would navigate to error page
+          reject('error');
         });
+      } else {
+        resolve(parsedResult);
       }
-      resolve(parsedResult);
     });
   }
 
@@ -77,10 +87,9 @@ export class StringParseService {
 export class ParseStringHelpers {
   public static mentionRegEx = /(?:[@])(\w{1,})/g;
   public static emoticonRegEx = /(?:[(])(\w{1,15})(?:[)])/g;
-  // source: https://stackoverflow.com/questions/8188645/javascript-regex-to-match-a-url-in-a-field-of-text
-  // note: removed ftp - didnt think it was neccessary
+  // source: https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
   // tslint:disable-next-line
-  public static linkRegEx = new RegExp('(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?', 'g');
+  public static linkRegEx = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
   /**
    *
    *
@@ -112,7 +121,7 @@ export class ParseStringHelpers {
    * @memberof StringParseService
    */
   public static findLinks(str: string): Array<string> {
-    return ParseStringHelpers.findAllRegEx(str, ParseStringHelpers.linkRegEx);
+    return ParseStringHelpers.findAllRegEx(str, ParseStringHelpers.linkRegEx, 0);
   }
   /**
    *  Method that takes in a string and regEx and outputs
@@ -124,17 +133,20 @@ export class ParseStringHelpers {
    * @returns {Array<string>}
    * @memberof StringParseService
    */
-  public static findAllRegEx(str: string, regEx: RegExp): Array<string> {
+  public static findAllRegEx(str: string, regEx: RegExp, matchingGroup?: number): Array<string> {
+    let groupIndex;
+    if (matchingGroup != null) {
+      groupIndex = matchingGroup;
+    } else {
+      groupIndex = 1;
+    }
     let matches = new Array<string>();
     let match = regEx.exec(str);
     while (match != null) {
-      // match index 1 does not include the non capturing characters
-      matches.push(match[1]);
+      matches.push(match[groupIndex]);
       match = regEx.exec(str);
     }
+    console.log(matches);
     return matches;
   }
 }
-
-angular.module('stringParse')
-  .service('StringParseService', StringParseService);

@@ -12,14 +12,7 @@ module.exports = {
     extensions: ['.ts', '.js', '.json']
   },
   devtool: "source-map-inline",
-  plugins: [
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      'window.jquery': 'jquery'
-    })
-  ],
+  plugins: [],
   module: {
     loaders: loaders
   }

@@ -3,7 +3,7 @@ import { StateProvider } from '@uirouter/angularjs';
 import { StringParseService } from './../../services/parse-string-service';
 
 export class ParseStringContainer {
-  public static $inject = ['StringParseService'];
+  public static $inject = ['stringParseService'];
   public static bindings = {};
   public static tagName = 'parseStringContainer';
   public static template = require('./parseString.html');
