@@ -61,10 +61,10 @@ npm test
 
 Some features seemed like overkill for such a small application.
 
-[ ] Babel - Make sure even IE8 is supported
-[ ] Protractor E2E Tests
-[ ] Linting
-[ ] PrePush - Linting, Test
+[] Babel - Make sure even IE8 is supported
+[] Protractor E2E Tests
+[] Linting
+[] PrePush - Linting, Test
 
 ### e2e test cases
 - make sure text area is enabled and visible
