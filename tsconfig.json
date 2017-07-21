@@ -7,6 +7,7 @@
     "module": "commonjs",
     "experimentalDecorators": true,
     "outDir": "out",
+    "lib": ["es2015", "dom"],
     "moduleResolution": "node",
     "skipLibCheck": true
   },
