@@ -8,9 +8,11 @@
     "url": "https://github.com/dubcdr/atlassian-hipchat"
   },
   "scripts": {
-    "start": "export NODE_ENV=dev && node_modules/.bin/webpack-dev-server --config webpack/webpack.dev.js --watch --port 8081",
-    "test": "karma start --NODE_ENV=test",
-    "build": "export NODE_ENV=production && webpack --config webpack/webpack.build.js"
+    "dev": "export NODE_ENV=dev && node_modules/.bin/webpack-dev-server --config webpack/webpack.dev.js --watch --port 8081",
+    "test": "export NODE_ENV=test && node_modules/.bin/karma start",
+    "build": "export NODE_ENV=production && node_modules/.bin/webpack --config webpack/webpack.build.js",
+    "start": "node back/app.js"
+
   },
   "author": "Devin Riley (devinriley@gmail.com)",
   "license": "MIT",

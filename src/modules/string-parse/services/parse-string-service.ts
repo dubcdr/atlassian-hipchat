@@ -40,15 +40,17 @@ export class StringParseService {
       if (links && links.length > 0) {
         this.getHtmlHeaders(links).then((resp: ng.IHttpPromiseCallbackArg<Array<IParsedLink>>) => {
           parsedResult.links = resp.data;
+        }, (err) => {
+          // Error Handling
+          // Would navigate to error page
         });
       }
-      console.log(parsedResult);
       resolve(parsedResult);
     });
   }
 
   public getHtmlHeaders(urls: Array<string>): ng.IHttpPromise<Array<IParsedLink>> {
-    return this.$http.post('/getUrlTitle', { urls });
+    return this.$http.post('/getUrlTitles', { urls });
   }
 
   /**
@@ -77,7 +79,8 @@ export class ParseStringHelpers {
   public static emoticonRegEx = /(?:[(])(\w{1,15})(?:[)])/g;
   // source: https://stackoverflow.com/questions/8188645/javascript-regex-to-match-a-url-in-a-field-of-text
   // note: removed ftp - didnt think it was neccessary
-  public static linkRegEx = new RegExp('(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?');
+  // tslint:disable-next-line
+  public static linkRegEx = new RegExp('(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?', 'g');
   /**
    *
    *

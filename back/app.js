@@ -18,6 +18,9 @@ server.connection({
   host: 'localhost'
 });
 
+/**
+ * Serve Static Files from FrontEnd
+ */
 server.register(require('inert'), (err) => {
   if (err) {
     throw err;
@@ -36,36 +39,77 @@ server.register(require('inert'), (err) => {
   });
 })
 
+/**
+ * This function uses Osmosis, a web scraping library I've used previously
+ * Very quick and very easy
+ *
+ * Also using escapeHtml
+ *
+ * @param {string} url
+ * @returns
+ */
 function getUrl(url) {
-  // console.log(`start of getUrl for ${url}`)
+  const urlRegEx = new RegExp('(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?');
   return new Promise((resolve, reject) => {
-    Osmosis.get(url)
-      .set({
-        'title': 'title'
-      })
-      .data((resp) => {
-        resp.url = url;
-        resp.title = escapeHtml(resp.title);
-        resolve(resp)
-      })
-      .log(console.log)
-      .error(console.log)
-      .debug(console.log);
+    if (urlRegEx.exec(url)[0] != null) {
+      Osmosis.get(url)
+        .set({
+          'title': 'title'
+        })
+        .data((resp) => {
+          resp.url = url;
+          resp.title = escapeHtml(resp.title);
+          resolve(resp)
+        })
+        .log(console.log)
+        .error(reject)
+        .debug(console.log);
+    }
+  }, (err) => {
+    console.log(err);
+    reject();
   });
 }
 
+function isUrlsValid(urls) {
+  for (let i = 0; i < urls.length; i++) {
+    if (!isUrlValid) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function isUrlValid(url) {
+  const regEx = new RegExp('(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?', 'g');
+  let match = regEx.exec(str);
+  return (match[0] != null);
+}
+
+/**
+ * Only real server route
+ *
+ * Accepts an array of strings that are urls
+ */
 server.route({
   method: 'POST',
-  path: '/getUrlTitle',
+  path: '/getUrlTitles',
   handler: (request, reply) => {
     if (request.payload.urls) {
       if (Array.isArray(request.payload.urls)) {
         let urls = request.payload.urls;
-        let actions = urls.map(getUrl);
-        console.log('actions: ', actions)
-        let results = Promise.all(actions);
-        results.then(console.log);
-        reply(results);
+        if (isUrlsValid(urls)) {
+          // define all the promises
+          let actions = urls.map(getUrl);
+          let results = Promise.all(actions).then((results) => {
+            reply(results);
+          }, (err) => {
+            console.log('error');
+            reply().code(500);
+          });
+        } else {
+          reply('invalid url in array').code(400);
+        }
       } else {
         reply('payload must contain urls and be an array').code(400);
       }

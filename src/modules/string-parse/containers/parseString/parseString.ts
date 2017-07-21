@@ -9,7 +9,7 @@ export class ParseStringContainer {
   public static template = require('./parseString.html');
 
   public textToParse: string;
-  public parsedResponse: object;
+  public parsedResponses: Array<object> = new Array<object>();
 
   constructor(protected stringParseService: StringParseService) {
 
@@ -17,7 +17,8 @@ export class ParseStringContainer {
 
   public parse() {
     this.stringParseService.parse(this.textToParse).then((response) => {
-      this.parsedResponse = response;
+      this.parsedResponses = [response].concat(this.parsedResponses);
+      this.textToParse = null;
     });
   }
 

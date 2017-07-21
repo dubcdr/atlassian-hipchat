@@ -4,7 +4,12 @@
 FrontEnd: AngularJS 1.5.*
 BackEnd: hapijs
 
-Other: Angular Material, Karma, Protractor
+Other:
+Common: Angular Material, Karma, Protractor,
+
+Osmosis: Webscraping Library i've used previously that I used to find title tag
+
+## Steps to Running the Application
 
 ### Install
 
@@ -12,22 +17,25 @@ Other: Angular Material, Karma, Protractor
 npm install
 ```
 
-### Starting the Application
+### Building the Application
+```
+npm run build
+```
+
+### Start the Server
 ```
 npm start
 ```
 
-### Start Backend Server
-```
-npm run serv
-```
+Now navigate to localhost:2500
 
 ### Development
 FrontEnd Development is best with Webpack Dev Server for automatic reloading.
-You will have to start the backend server regardless even when running the Webpack Dev Server.
+Note: Setting up a CORS policy seemed like overkill for this project, therefore you wont be able to hit the api for finding 'title' tags from urls
 ```
 npm run dev
 ```
+Note this dev-server runs on localhost:8081
 
 ### Testing
 
@@ -35,17 +43,15 @@ npm run dev
 npm test
 ```
 
-Coverage
+## Coming Soon
 
-```sh
-open reports/coverage/index.html
-```
+Some features seemed like overkill for such a small application.
 
-Build
-```sh
-npm install
-npm run build
-```
+[ ] Babel - Make sure even IE8 is supported
+[ ] Protractor E2E Tests
 
-
-### Features
+### e2e test cases
+- make sure text area is enabled and visible
+- make sure button is clickable and visible
+- make sure input text is cleared after clicking parse
+- make sure ng-repeat grows after clicking parse

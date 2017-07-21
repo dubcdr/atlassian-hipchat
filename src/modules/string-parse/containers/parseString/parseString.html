@@ -1,12 +1,22 @@
 <!--All of these are so simple, no need to convert them into components  -->
 <div layout-padding layout="column">
+  <div layout="column" style="background-color:lightgrey;">
+    <span class="md-title">Welcome to Devin Riley's Solution to the HipChat FE Challenge</span>
+    <span>Please enter a message with: links, emoticons or user mentions below</span>
+    <span>devinriley@gmail.com</span>
+  </div>
   <!--Search  -->
-  <div class="" layout="row">
-    <md-input-container md-no-float>
-      <textarea class="md-input" ng-model="$ctrl.textToParse" />
+  <div style="margin-bottom: 10px;" layout="column">
+    <md-input-container>
+      <textarea class="md-input" ng-model="$ctrl.textToParse" placeholder="Enter String Here..." />
     </md-input-container>
-    <md-button ng-click="$ctrl.parse()" class="md-raised" aria-label="parse"> Parse </md-button>
+    <md-button ng-click="$ctrl.parse()" class="md-raised md-primary" aria-label="parse"> Parse </md-button>
   </div>
   <!--Result  -->
-  <div>{{$ctrl.parsedResponse | json}}</div>
+  <span class="md-subheader" ng-if="$ctrl.parsedResponses.length > 0">Results</span>
+  <md-card ng-repeat="response in $ctrl.parsedResponses">
+    <md-card-content>
+      {{response | json}}
+    </md-card-content>
+  </md-card>
 </div>
