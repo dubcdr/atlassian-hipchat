@@ -8,12 +8,12 @@
   <!--Search  -->
   <div style="margin-bottom: 10px;" layout="column">
     <md-input-container>
-      <textarea class="md-input" ng-model="$ctrl.textToParse" placeholder="Enter String Here..." />
+      <textarea class="md-input" ng-model="$ctrl.textToParse" placeholder="Enter String Here..."></textarea>
     </md-input-container>
     <md-button ng-click="$ctrl.parse()" class="md-raised md-primary" aria-label="parse"> Parse </md-button>
   </div>
   <!--Result  -->
-  <span class="md-subheader" ng-if="$ctrl.parsedResponses.length > 0">Results</span>
+  <span class="md-subheader" ng-show="$ctrl.parsedResponses.length > 0">Results</span>
   <md-card ng-repeat="response in $ctrl.parsedResponses">
     <md-card-content>
       {{response | json}}
