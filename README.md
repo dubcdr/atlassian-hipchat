@@ -63,6 +63,7 @@ Some features seemed like overkill for such a small application.
 
 - [ ] Babel - Make sure even IE8 is supported
 - [ ] Protractor E2E Tests
+- [ ] Integration Tests
 - [ ] Linting
 - [ ] PrePush - Linting, Test
 
@@ -71,3 +72,6 @@ Some features seemed like overkill for such a small application.
 - make sure button is clickable and visible
 - make sure input text is cleared after clicking parse
 - make sure ng-repeat grows after clicking parse
+
+### integration test
+- make sure the format of response is correct
