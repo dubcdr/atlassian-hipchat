@@ -35,6 +35,15 @@ describe('service::Parse-String-Service', () => {
     expect(result.length).toBe(1);
   });
 
+  it('should return an empty object if nothing special is in the string', () => {
+    let str = 'this is a test string that has no url, emoticons or user mentions';
+    let results = new Array<string>();
+    results.concat(ParseStringHelpers.findAllRegEx(str, ParseStringHelpers.linkRegEx, 0));
+    results.concat(ParseStringHelpers.findAllRegEx(str, ParseStringHelpers.mentionRegEx));
+    results.concat(ParseStringHelpers.findAllRegEx(str, ParseStringHelpers.emoticonRegEx));
+    expect(results.length).toBe(0);
+  })
+
   it('should find urls, strings and emoticons', () => {
     let str = '@bob @john (success) such a cool feature; https://twitter.com/jdorfman/status/430511497475670016';
     let emoticons = ParseStringHelpers.findAllRegEx(str, ParseStringHelpers.emoticonRegEx);
