@@ -48,7 +48,7 @@ server.register(require('inert'), (err) => {
  * @param {string} url
  * @returns
  */
-function getUrl(url) {
+function getTitleTag(url) {
   return new Promise((resolve, reject) => {
     Osmosis.get(url)
       .set({
@@ -56,7 +56,12 @@ function getUrl(url) {
       })
       .data((resp) => {
         resp.url = url;
-        resp.title = escapeHtml(resp.title);
+        if (resp.title != null) {
+          resp.title = escapeHtml(resp.title);
+        } else {
+          // if there is no title tag then just set the title to the url
+          resp.title = url
+        }
         resolve(resp)
       })
       .log(console.log)
@@ -97,8 +102,7 @@ server.route({
         let urls = request.payload.urls;
         if (isUrlsValid(urls)) {
           // define all the promises
-          let actions = urls.map(getUrl);
-          console.log('got to actions');
+          let actions = urls.map(getTitleTag);
           let results = Promise.all(actions).then((results) => {
             reply(results);
           }, (err) => {
