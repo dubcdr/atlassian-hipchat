@@ -8,11 +8,6 @@ A backend was neccessary because of CORS issues when trying to use AJAX to get o
 
 I only set up tests to mimic the exercise requirements and they are for the service which parses the string. E2E tests would be next and I have listed the cases I would test below.
 
-TODO
-- Url RegEx
-- Testing inject
-- check emoticon rules
-
 ## Stack
 FrontEnd: AngularJS 1.5.*
 BackEnd: hapijs
