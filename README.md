@@ -70,6 +70,9 @@ Some features seemed like overkill for such a small application.
 - make sure button is clickable and visible
 - make sure input text is cleared after clicking parse
 - make sure ng-repeat grows after clicking parse
+- input string with all 3 special inputs, make sure format matches requirements
+- input string with only emoticon, and make sure output only includes key for emoticon
 
-### integration test
-- make sure the format of response is correct
+### postman tests
+- hit api with one url, make sure response is formatted correctly
+- hit api with multiple urls, make sure multiple responses
