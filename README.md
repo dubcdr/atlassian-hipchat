@@ -41,7 +41,9 @@ Now navigate to [localhost:2500](http://localhost:2500)
 
 ### Development
 FrontEnd Development is best with Webpack Dev Server for automatic reloading.
+
 Note: Setting up a CORS policy seemed like overkill for this project, therefore you wont be able to hit the api for finding 'title' tags from urls
+
 Note: the dev-server runs on [localhost:8081](http://localhost:8081)
 ```
 npm run dev
