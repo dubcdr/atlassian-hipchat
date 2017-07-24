@@ -1,3 +1,4 @@
+
 # Devin Riley: Solution to HipChat FE Coding Exercise
 
 Welcome to my solution to this coding exercise.
@@ -6,7 +7,7 @@ I architected the frontend to be highly extensible, hence the module structure. 
 
 A backend was neccessary because of CORS issues when trying to use AJAX to get other sites. The backend is very simple as well, it hosts one folder and one additional POST route that takes an array of strings as input and validates they are urls. Once validated it uses Osmosis, a webscraping library, to find the title tag of each url sent.
 
-I only set up tests to mimic the exercise requirements and they are for the service which parses the string. E2E tests would be next and I have listed the cases I would test below.
+I only set up tests to mimic the exercise requirements and they are for the service which parses the string. Integration tests are notoriously difficult in AngularJS because of dependency injection. For that reason I would set up Postman tests to ensure the REST Api returned what I expected in the correct format. And then use E2E tests to test the main parse method.
 
 ## Stack
 FrontEnd: AngularJS 1.5.*
@@ -40,7 +41,9 @@ Now navigate to [localhost:2500](http://localhost:2500)
 
 ### Development
 FrontEnd Development is best with Webpack Dev Server for automatic reloading.
+
 Note: Setting up a CORS policy seemed like overkill for this project, therefore you wont be able to hit the api for finding 'title' tags from urls
+
 Note: the dev-server runs on [localhost:8081](http://localhost:8081)
 ```
 npm run dev
@@ -67,6 +70,9 @@ Some features seemed like overkill for such a small application.
 - make sure button is clickable and visible
 - make sure input text is cleared after clicking parse
 - make sure ng-repeat grows after clicking parse
+- input string with all 3 special inputs, make sure format matches requirements
+- input string with only emoticon, and make sure output only includes key for emoticon
 
-### integration test
-- make sure the format of response is correct
+### postman tests
+- hit api with one url, make sure response is formatted correctly
+- hit api with multiple urls, make sure multiple responses
