@@ -31,6 +31,7 @@ export class StringParseService {
     return new this.$q((resolve, reject) => {
       this.$log.info('starting parse service');
       let parsedResult = {} as IParseResponse;
+      // Find Links
       let links = ParseStringHelpers.findLinks(str);
       // Find Mentions
       let mentions = ParseStringHelpers.findMentions(str);

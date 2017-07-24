@@ -4,7 +4,7 @@ import { StateProvider } from '@uirouter/angularjs';
 import { StringParseService } from './../../services/parse-string-service';
 
 export class ParseStringContainer {
-  public static $inject = ['stringParseService'];
+  public static $inject = ['stringParseService', '$log'];
   public static bindings = {};
   public static tagName = 'parseStringContainer';
   public static template = require('./parseString.html');
@@ -12,7 +12,7 @@ export class ParseStringContainer {
   public textToParse: string;
   public parsedResponses: Array<object> = new Array<object>();
 
-  constructor(protected stringParseService: StringParseService) {
+  constructor(protected stringParseService: StringParseService, protected $log: ng.ILogService) {
 
   }
 
@@ -21,7 +21,7 @@ export class ParseStringContainer {
       this.parsedResponses = [response].concat(this.parsedResponses);
       this.textToParse = null;
     }, (err) => {
-      console.log('error with parse service');
+      this.$log.info('error with parse service');
     });
   }
 
